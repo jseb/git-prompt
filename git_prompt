@@ -1,5 +1,4 @@
 #!/bin/bash
-
 git_prompt() {
     git_status_output=$(git status 2> /dev/null) || return
 
@@ -47,14 +46,14 @@ git_prompt() {
     ahead_arrow() {
         if commits_ahead=$(number_of_commits "ahead")
         then
-            echo -e "$bold$(dashline $commits_ahead)$no_colour>"
+            echo -e "$bold$(dashline $commits_ahead)$no_colour> $commits_ahead ahead"
         fi
     }
 
     behind_arrow() {
         if commits_behind=$(number_of_commits "behind")
         then
-            echo "<$bold$(dashline $commits_behind)$no_colour"
+            echo "$commit_behind behind <$bold$(dashline $commits_behind)$no_colour"
         fi
     }
 
@@ -74,7 +73,7 @@ git_prompt() {
         then
             branch_colour=$green
         fi
-        echo "($branch_colour$(branch_name)$no_colour)"
+        echo "$branch_colour$(branch_name)$no_colour"
     }
 
     local behind_part=$(behind_arrow)
@@ -84,7 +83,7 @@ git_prompt() {
     then
         prompt="$(branch_part)"
     else
-        prompt="[ $behind_part$(branch_part)$ahead_part ]"
+        prompt="[ $behind_part|$ahead_part ]\n$(branch_part)"
     fi
 
     echo -e "$prompt"
