@@ -34,13 +34,13 @@ git_prompt() {
         eval printf "%.0s$1" {1..$2}
     }
 
-    local bold="\033[1m"
-    local no_colour="\033[0m"
+    local bold=$(tput bold)
+    local no_colour=$(tput sgr0)
 
     ahead_arrow() {
         if commits_ahead=$(number_of_commits "ahead")
         then
-            echo -e "$bold$(repeat_char - $commits_ahead)$no_colour>" \
+            echo -e "\[$bold\]$(repeat_char - $commits_ahead)\[$no_colour\]>" \
                 "$commits_ahead ahead"
         fi
     }
@@ -48,15 +48,15 @@ git_prompt() {
     behind_arrow() {
         if commits_behind=$(number_of_commits "behind")
         then
-            echo "$commits_behind behind" \
-                "<$bold$(repeat_char - $commits_behind)$no_colour"
+            echo -e "$commits_behind behind" \
+                "<\[$bold\]$(repeat_char - $commits_behind)\[$no_colour\]"
         fi
     }
 
     branch_part() {
-        local red="\033[31m"
-        local green="\033[32m"
-        local yellow="\033[33m"
+        local red=$(tput setaf 1)
+        local green=$(tput setaf 2)
+        local yellow=$(tput setaf 3)
         local branch_colour=$green
 
         if untracked_files
@@ -66,7 +66,7 @@ git_prompt() {
         then
             branch_colour=$yellow
         fi
-        echo "$branch_colour$(branch_name)$no_colour"
+        echo "\[$branch_colour\]$(branch_name)\[$no_colour\]"
     }
 
     stash_part() {
