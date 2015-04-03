@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env/bash
 create_prompt() {
     git_status_output=$(git status 2> /dev/null) || return
     branch_status=$(git status --porcelain --branch)
