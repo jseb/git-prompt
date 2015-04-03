@@ -20,7 +20,7 @@ By simply pasting this in your terminal:
 
 ```
 source <(curl https://raw.github.com/jseb/git-prompt/master/git-prompt) \
-	&& export PS1="\$(git_prompt)"$PS1
+	&& export PROMPT_COMMAND=git_prompt
 ```
 
 ## Installation
@@ -29,5 +29,5 @@ Clone the repo (or just download the file), and add this to the end of your
 
 ```
 source path/to/git-prompt/git-prompt
-export PS1="\$(git_prompt)"$PS1
+export PROMPT_COMMAND=git_prompt
 ```

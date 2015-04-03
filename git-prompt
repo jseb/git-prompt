@@ -1,5 +1,5 @@
 #!/bin/bash
-git_prompt() {
+create_prompt() {
     git_status_output=$(git status 2> /dev/null) || return
     branch_status=$(git status --porcelain --branch)
 
@@ -85,4 +85,8 @@ git_prompt() {
     fi
 
     echo -e "$prompt $(stash_part)"
+}
+original_PS1=$PS1
+git_prompt() {
+    PS1="$(create_prompt)$original_PS1"
 }
