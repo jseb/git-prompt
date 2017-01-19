@@ -76,17 +76,27 @@ create_prompt() {
 
     local behind_part=$(behind_arrow)
     local ahead_part=$(ahead_arrow)
+    local prompt="$(branch_part)"
+    local stash_part=$(stash_part)
 
-    if [[ "$behind_part" || "$ahead_part" ]]
+    if [[ "$stash_part" ]]
     then
-        prompt="$behind_part|$ahead_part\n$(branch_part)"
-    else
-        prompt="$(branch_part)"
+        prompt+=" $stash_part"
     fi
 
-    echo -e "$prompt $(stash_part)"
+    if [[ "$behind_part" ]]
+    then
+        prompt="$behind_part $prompt"
+    fi
+
+    if [[ "$ahead_part" ]]
+    then
+        prompt+=" $ahead_part"
+    fi
+
+    echo -e "$prompt"
 }
 original_PS1=$PS1
 git_prompt() {
-    PS1="$(create_prompt)$original_PS1"
+    PS1="$(create_prompt)\n$original_PS1"
 }
