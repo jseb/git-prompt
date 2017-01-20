@@ -98,5 +98,11 @@ create_prompt() {
 }
 original_PS1=$PS1
 git_prompt() {
-    PS1="$(create_prompt)\n$original_PS1"
+    prompt=$(create_prompt)
+    if [ "$prompt" ]
+    then
+        PS1="$(create_prompt)\n$original_PS1"
+    else
+        PS1=$original_PS1
+    fi
 }
